@@ -16,11 +16,14 @@ public class App
         System.out.println( "Hello World!" );
 
         TaskRepository taskRepository = new TaskRepository();
-//        CreateTaskRequest request = new CreateTaskRequest();
-//        request.setDescription("Learn JDBC");
-//        request.setDeadline(LocalDate.now().plusWeeks(1));
-//
-//        taskRepository.createTask(request);
-        taskRepository.deleteTask(1);
+        CreateTaskRequest request = new CreateTaskRequest();
+        request.setDescription("Learn JDBC");
+        request.setDeadline(LocalDate.now().plusWeeks(1));
+
+        taskRepository.createTask(request);
+//        taskRepository.deleteTask(1);
+//       taskRepository.updateTask(2, );
+
+        System.out.println(taskRepository.getTasks());
     }
 }

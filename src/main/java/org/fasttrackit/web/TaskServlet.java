@@ -6,6 +6,7 @@ import org.fasttrackit.config.ObjectMapperConfiguration;
 import org.fasttrackit.domain.Task;
 import org.fasttrackit.service.TaskService;
 import org.fasttrackit.transfer.CreateTaskRequest;
+import org.fasttrackit.transfer.UpdateTaskRequest;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -45,6 +46,19 @@ public class TaskServlet extends HttpServlet {
             // writing tasks to response a JSON array
            ObjectMapperConfiguration.getObjectMapper().writeValue(resp.getWriter(),tasks);
 
+        } catch (SQLException e) {
+            resp.sendError(500, e.getMessage());
+        }
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String idAsString = req.getParameter("id");
+
+        UpdateTaskRequest request = ObjectMapperConfiguration.getObjectMapper().readValue(req.getReader(), UpdateTaskRequest.class);
+
+        try {
+            taskService.updateTask(Long.parseLong(idAsString), request);
         } catch (SQLException e) {
             resp.sendError(500, e.getMessage());
         }
